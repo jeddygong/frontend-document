@@ -1,2 +1,19 @@
-# front-end-every-code-interview
-前端每日一练，大厂面试题目，涵盖前端所有知识点，每天进步一点点，跟自己作对往往才是最有挑战的。HTML/CSS/Javascript/Nodejs/Typescript/ECMAScript/Vue/React/Webpack/小程序/网络/设计模式/数据结构/算法/安全/工程化/性能优化
+# 每天不定时更新interview or every-code
+前端每日一练，大厂面试题目，涵盖前端所有知识点，每天进步一点点，跟自己作对往往才是最有挑战的。
+
+
+
+### 目录层次结构说明
+
+```javascript
+--- answer // 所有答案列表
+--- every-code // 每日一练列表
+--- interview // 前端面试题列表
+```
+
+
+
+### 注意事项
+
+	* 所有的题目和答案都会在issues中显示（欢迎补充）
+	* 同时大家可以在issues题目下方回复，提交自己的解决方案；
