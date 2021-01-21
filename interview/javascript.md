@@ -10,5 +10,9 @@
 
 4. [[2021-01-19 更新] 请列出目前主流的 Javascript 模块化实现的技术有哪些？ 说出它们的区别？](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/14)
 
+5. [[2021-01-21 更新] 介绍下class 和 ES5 的类的区别？并说说 new 执行的过程？](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/15)
+
+6. 
+
    
 
