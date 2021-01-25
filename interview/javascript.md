@@ -12,7 +12,9 @@
 
 5. [[2021-01-21 更新] 介绍下class 和 ES5 的类的区别？并说说 new 执行的过程？](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/15)
 
-6. 
+6. [[2021-01-22 更新] 什么是防抖和节流，说一下原理、区别和应用，并用Javascript进行实现？](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/16)
+
+7. [[2021-01-25 更新] 说下call、apply、bind三者的区别、应用以及内部实现？](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/17)
 
    
 
