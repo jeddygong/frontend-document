@@ -1,9 +1,3 @@
-参考一：https://blog.csdn.net/xiaomao_wxj/article/details/108090027
-
-参考二：https://www.cnblogs.com/catherLee/p/13274006.html
-
-
-
 ### 前言
 
 ​	面试中几乎每次都会问到一个js中关于call、apply、bind的问题，比如:

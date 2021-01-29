@@ -16,5 +16,7 @@
 
 7. [[2021-01-25 更新] 说下call、apply、bind三者的区别、应用以及内部实现？](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/17)
 
+8. [[2021-01-28 更新] 手写call、apply、bind的内部实现。](https://github.com/Jeddy-2020/front-end-every-code-interview/issues/18)
+
    
 
