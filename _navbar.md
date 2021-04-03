@@ -1,5 +1,6 @@
 * [面试分类](/interview/question/html)
-* [vue3](/vue3/list.md)
+* [Vue3](/vue3/list.md)
+* [Typescript](/vue3/list.md)
 <!-- * [:us:, :uk:](/)
 * [:cn:](/zh-cn/) -->
 

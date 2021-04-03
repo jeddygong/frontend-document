@@ -1,12 +1,13 @@
-![logo](https://docsify.js.org/_media/icon.svg)
+![logo](https://avatars.githubusercontent.com/u/64977484?s=60&v=4)
 
-# MJ_Mall
+# Jeddy Gong - 部长
 
-> 使用当前最主流Java技术栈，前后端分离的商城系统
+> 涵盖前端所有知识点，包括面试精选，新技术等等
 
-* 前端框架：vue-cli、vue-router、vuex、axios
-* 后端框架：Springboot、springcloud alibaba、mybaits
-* 中间件：Mysql、RabbitMQ、Redis、Mongodb、Elasticsearch
+* :bulb: 前端基础：HTML、CSS、JS
+* :newspaper: 专题 Typescript、ECMAScript、NodeJs、Vue、React、AngularJs、小程序
+* :hammer: 工程化 webpack、gulp、rollup、vite
+* :coffee: 算法、网络、安全
 
-[GitHub](https://github.com/shelimingming/MJ_Mall.git)
-[Get Started](#quick-start)
+[GitHub](https://github.com/jeddygong)
+[Get Started](/README.md)
