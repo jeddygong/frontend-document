@@ -1,7 +1,8 @@
 * [面试分类](/interview/question/html)
 * [Vue3](/vue3/list.md)
 * [Typescript](/vue3/list.md)
-<!-- * [:us:, :uk:](/)
+* [前端开发核心知识进阶](/前端开发核心知识进阶/JavaScript基础强化/01/this到底指向谁.md)
+* <!-- * [:us:, :uk:](/)
 * [:cn:](/zh-cn/) -->
 
 <!-- * **设计文档**
