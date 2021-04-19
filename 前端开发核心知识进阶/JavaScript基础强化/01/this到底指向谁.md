@@ -23,3 +23,356 @@
 &emsp;关于this 指向的具体细节和规则后面再慢慢分析，这里可以先“**死记硬背**”以下几条规律：    
 
 * **在函数体中，非显示或隐式地简单调用函数时，在严格模式下，函数内的 this 会被绑定到 undefined 上，在非严格模式下则会被绑定到全局对象 window/global 上。**
+* **一般使用 new 方法调用构造函教时，构造函数内 this 会被绑定到新创建的对象上。**
+* **一般通过 call/apply/bind 方法显示调用函数时，函数体内的 this 会被绑定到指定参数的对象上。**
+* **一般通过上下文对象调用函数时，函数体内的 this 会被绑定到该对象上**
+* **在箭头函数中，this 的指向是由外层 (函数或全局) 作用城来决定的。**
+
+当然，真实环境多种多样，下面就根据具体环境来逐一梳理。
+
+
+
+# 实战例题分析
+
+&emsp;有人说，JavaScript 的 this 在某种程度上体现了 JavaScript 初期设计的不足，因此不需要仔细研究这些“糟粕”；也有人翻出规范，照本宣读，但这也许会让读者更加感觉“云里雾里”。其实，“糟粕”真不意昧着没必要学。虽然我也不认为对于各种关于 this 的用法倒背如流就是好的，但是了解它的这些“天生特性”能够切实避免写出问题代码，也能使代码更具有可读性。
+
+&emsp;我认为某些概念“只有记死，才能用活”，所以让我们从下面的例子中体会这一点吧！先将一些用法死记硬背，我相信你慢慢地便会完全理解。
+
+### 例题组合1：全局环境中的this
+
+&emsp;1.1 我们来看例题：请给出下面代码的运行结果。
+
+```javascript
+function f1() {
+  console.log(this)
+}
+
+function f2() {
+  'use strict'
+  console.log(this)
+}
+
+f1() // window
+f2() // undefined
+```
+
+&emsp;这种情况相对简单、直接，函数在浏览器全局环境中被简单调用，在非严格模式下 this 指向 window, 在通过 use srict 指明严格模式的情况下指向undefined。
+
+
+
+&emsp;1.2 这道题比较基础，但是需要面试者格外注意其变种。例如这样一道题目：请给出下面代码的运行结果。
+
+```javascript
+const foo = {
+  bar: 10,
+  fn: function() {
+    console.log (this)
+    console.log (this.bar)
+}
+var fnl = foo.fn;
+fn1();
+```
+
+&emsp;这里的 this 仍然指向 window。虽然 fn 函数在 foo 对象中用来作为对象的方法，但是在赋值给 fn1 之后，fn1 仍然是在 window 的全局环境中执行的。因此，以上代码会输出 window 和 undefined， 其输出结果与以下语句的等价。
+
+```javascript
+console.log(window);
+console.1og(window.bar);
+```
+
+
+
+&emsp;还是上面这道题目，如果将调用改为以下形式，
+
+```javascript
+const foo = {
+  bar: 10,
+  fn: function() {
+    console.log(this);
+    console.log(this.bar);
+  }
+}
+foo.fn();
+```
+
+&emsp;则输出如下所示：
+
+```javascript
+{ bar:10, fn: f }
+
+10
+```
+
+&emsp;这时，this 指向的是最后调用它的对象，在 foo.fn() 语句中，this 指向 foo 对象。请记住，在执行函数时不考虑显式绑定，如果函数中的 this 是被上一级的对象所调用的，那么 this 指向的就是上一级的对象；否则指向全局环境。
+
+
+
+### 例题组合2: 上下文对象调用中的 this
+
+&emsp;参考上面的结论，面对“给出以下代码的输出结果”这样的问题时，我们将不再困惑。运行以下代码，最终会返回true。
+
+```javascript
+const student = {
+  name: ' Lucas',
+  fn: function() {
+  	return this
+  }
+}
+console.1og(student.fn() === student)
+```
+
+&emsp;当存在更复杂的调用关系时，如以下代码中的嵌套关系，this 会指向最后调用它的对象，因此输出将会是 Mike。
+
+```javascript
+const person = {
+  name: ' Lucas '，
+  brother:{
+    name: 'Mike' ，
+    fn: function() {
+    	return this.name
+    }
+  }
+}
+console.1og (person.brother.fn())
+```
+
+&emsp;至此，this 的上下文对象调用已经介绍得比较请楚了。我们再有一道更高阶的题目: 请描述以下代码的运行结果。
+
+```javascript
+const o1 = {
+  text: 'o1',
+  fn: function() {
+		return this.text
+  }
+}
+
+const o2 = {
+  text: 'o2',
+  fn: function() {
+		return o1.fn();
+  }
+}
+
+const o3 = {
+  text: 'o3',
+  fn: function() {
+    var fn = o1.fn;
+    return fn();
+  }
+}
+
+console.log(o1.fn()); // o1
+console.log(o2.fn()); // o1
+console.log(o3.fn()); // undefined
+```
+
+* 第一个 console 最简单，输出 o1 不难理解。难点在第二个和第三个 console 上，关键还是看调用 this 的那个函数。
+* 第二个 console 中的 o2.fn() 最终调用的还是 ol.fn()，因此运行结果仍然是 ol。
+* 最后一个 cnsole 中的 o3.fn() 通过 var fn = ol.fn 的赋值进行了“裸奔”调用，因此这里的 this 指向 window, 运行结果当然是 undefined。
+
+> 如果面试者回答顺利，面试官可能紧接着追问: 如果我们需要让 console.log( o2.fn() ) 语句输出 o2，该怎么做?
+
+&emsp;一般面试者可能会想到使用 bind，clll，apply 来对 this 的指向进行干预，这确实是一种思路。 但是面试官可能还会接着问:如果不能使用 bind，call， apply，还有别的方法吗?
+
+&emsp;这个问题可以考在面试者对基础知识的掌程深度及随机应变的思维能力。答案是，当然还有别的方法，如下。
+
+```javascript
+const o1 = {
+  text: 'o1',
+  fn: function() {
+		return this.text
+  }
+}
+
+const o2 = {
+  text: 'o2',
+  fn: o1.fn
+}
+
+console.log(o2.fn()); // o2
+```
+
+&emsp;以上方法同样应用了那个重要的结论：this 指向最后调用它的对象。在上面的代码中，我们提前进行了赋值操作，将函数 fn 挂载到 o2对象上，fn 最终作为 o2 对象的方法被调用。
+
+
+
+### 例题组合3：通过 bind、call、apply 改变 this 指向
+
+&emsp;上文提到 bind、call、apply，与之相关的比较常见的基础考查点是: bind、call、apply 这3个方法的区别。
+
+&emsp;这样的问题相对基础，所以我们直接给出答案：用一句话总结，它们都是用来改变相关函数 this 指向的，但是 `call` 和 `apply` 是直接进行相关函数调用的； `bind` 不会执行相关函数，而是返回一个新的函数，这个新的函数已经自动绑定了新的 this 指向，开发者可以手动调用它。如果再说具体一点，就是 `call` 和 `apply` 之间的区别主要体现在**参数设定**上，不过这里就不再展开来讲了。
+
+&emsp;用代码来总结的话，以下3段代码是等价的。
+
+```javascript
+// 1
+const target = {}
+fn.call(target, 'arg1', 'arg2')
+
+// 2
+const target = {}
+fn.apply(target, ['arg1’'， 'arg2'])
+
+// 3
+const target = {}
+fn.bind(target, 'argl', 'arg2')()
+```
+
+&emsp;具休用法这里不再说明，读者如果内不清楚，请自已了解下必要的物风点，下面我们来看一道例题并对其进行分析。
+
+&emsp; 下面我们来看一道例题并对其进行分析。
+
+```javascript
+const foo = (
+  name: 'lucas',
+  logName: function() {
+    console.log(this.name)
+  }  
+}
+
+const bar = {
+  name : 'mike ',
+}
+
+console.log(foo.logName.call(bar))
+```
+
+&emsp;以上代码的执行结果为 mike，这不难理解。但是对 call、apply、bind 的高级考查往往需要面试者结合构造函数及组合来实现继承(实现继承的话题之后会单独讲解)。关于构造函数的使用案例，我们会结合接下来的例题组合进行展示。
+
+
+
+### 例题组合4：构造函数和this
+
+&emsp;关于构造函数和 this，我们来看一道最直接的例题，如下。
+
+```javascript
+function Foo() {
+	this.bar = "Lucas"
+}
+const instance = new Foo()
+console.log(instance.bar)
+```
+
+&emsp;执行以上代码将会输出 Lucas，但是这样的场景往往伴随着一个问题: new 操作符调用构造函数时具体做了什么呢？以下答案(简略版答案)仅供参考。
+
+* 创建一个新的对象。
+* 将构造函数的 this 指向这个新的对象。
+* 为这个对象添加属性、方法等。
+* 最终返回新的对象。
+
+&emsp;上述过程也可以用如下代码表述。
+
+```javascript
+var obj={}
+obj._ proto__ = Foo.prototype
+Foo.call(obj)
+```
+
+&emsp;当然，这里对 new 的模拟是一个简单、基础的版本，更复杂的版本会在原型、原型链相关的篇章中讲述。
+
+&emsp;需要指出的是，如果在构造函数中出现了显式 return 的情况，那么需要注意，其可以细分为两种场景。
+
+&emsp;场景1：执行以下代码将输出 undefined, 此时 instance 返回的是空对象 o。
+
+```javascript
+function Foo() (
+  this.user = "Lucas"
+  const o = {}
+  return o
+}
+
+const instance = new Foo()
+console.log(instance.user)
+```
+
+&emsp;场景2：执行以下代码将输出 Lucas，也就是说，instance 此时返回的是目标对象实例 this。
+
+```javascript
+function Foo() {
+  this.user = "Lucas"
+  return 1
+}
+
+const instance = new Foo()
+console.1og(instance.user)
+```
+
+&emsp;所以，如果构造函数中显式返回一个值，且返回的是个对象 (返回复杂类型)，那么 this 就指向这个返回的对象；如果返回的不是一个对象 (返回基本类型) ，那么 this 仍然指向实例。
+
+
+
+### 例题组合5：箭头函数中的this
+
+&emsp;介绍例题前，我们先来温习下相关结论：在箭头函数中，this 的指向是由外层 (函数或全局) 作用域来决定的。《你不知道的JavaScript》一书中这样描述箭头函数中的 this: the enclosing(function or global)scope (说明：箭头函数中的 this 指向是由其所属函数或全局作用域决定的)。
+
+&emsp;下面来看一段示例代码。在这段代码中，this 出现在 setTimeout() 的匿名函数中，因此 this 指向 window 对象。
+
+```javascript
+const foo = {
+  fn: function () {
+  	setTimeout(function() (
+  		console.log(this)
+     })
+  }
+}
+console.log(foo.fn())
+```
+
+&emsp;如果需要让 this 指向 foo 这个对象，则可以巧用箭头函数来解决，代码如下。
+
+```javascript
+const foo = {
+  fn: function () {
+  	setTimeout(() => (
+  		console.log(this)
+     })
+  }
+}
+console.log(foo.fn())
+// {fn: f}
+```
+
+&emsp;单纯的箭头函数中的 this 指向问题非常简单，但是如果综合所有情况，并结合 this 的优先级进行考查，那么这时 this 的指向并不容易确定。下面就来学习 this 优先级的相关知识。
+
+
+
+### 例题组合6：this 优先级
+
+&emsp;我们常常把通过 call、apply、 bind、 new 对 this 进行绑定的情况称为`显式绑定`，而把根据调用关系确定 this 指向的情况称为`隐式绑定`。
+
+&emsp;那么显式绑定和隐式绑定谁的优先级更高呢? 关于这个问题的答案，我们会在接下来的例题中为大家揭晓。
+
+&emsp;执行以下示例代码。
+
+```javascript
+function foo(a) (
+	console.log(this.a)
+}
+
+const obj1 = { 
+  a: 1,
+	foo: foo
+}
+
+const obj2 = { 
+  a: 2,
+	foo: foo
+}
+
+obj1.foo.call(obj2)
+obj2.foo.call(obj1)
+```
+
+&emsp;输出分别为2、1，也就是说，call、apply 的显式绑定一般来说优先级更高。下面再来看另一段实例代码。
+
+```javascript
+function foo(a) (
+	console.log(this.a)
+}
+
+const obj1 = {}
+var bar = foo.bind(obj1)
+bar(2)
+console.1og(obj1.a)
+```
+
