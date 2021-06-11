@@ -6,21 +6,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <!-- 官网模板 -->
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"> -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"> -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-defaults.css"> -->
+
   <!-- Theme: Simple Dark -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css"> -->
 
+  <!-- 第三方模板样式，正常模式 -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-simple.css"/> -->
+
+  <!-- 第三方模板样式，暗黑模式 -->
+  <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-simple-dark.css"/>
+
+  <!-- 代码块样式的语法高亮器 -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/prism-github/prism-github.css"> -->
+  <link rel="stylesheet" href="https://unpkg.com/prism-theme-one-dark/prism-onedark.css">
+
+
+
   <style>
-    #main.markdown-section p {
+    /* #main.markdown-section p {
       line-height: 2.6rem;
     }
 
     #main.markdown-section ol, #main.markdown-section ul {
       padding-left: revert;
       line-height: 2.5rem;
-    }
+    } */
   </style>
 
 </head>
@@ -28,16 +42,33 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: '',
+      name: '前端文档库',
+      nameLink: '#/README',
       repo: 'https://github.com/jeddygong',  // 首页右上角的github地址
+      homepage: "README.md",
       coverpage: true, // 首页对应的coverpage.md文档
-      loadNavbar: true, // 头部导航栏navbar.md文档
-      loadSidebar: true, // 加载 _sidebar.md
+      loadNavbar: false, // 头部导航栏navbar.md文档
+      loadSidebar: "_sidebar.md", // 加载 _sidebar.md
+      auto2top: true,
+      maxLevel: 3,
+      subMaxLevel: 5,
     }
   </script>
-  <!-- Docsify v4 -->
+  <!-- 主题 Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script> -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
-</body> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script> -->
+
+  <!-- 搜索js -->
+  <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
+
+  <!-- 代码复制js -->
+  <script src="https://unpkg.com/docsify-copy-code"></script>
+
+  <!-- 分页js -->
+  <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+  <!-- 图片缩放 -->
+  <!-- <script src="https://unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script> -->
+</body>
 </html>
